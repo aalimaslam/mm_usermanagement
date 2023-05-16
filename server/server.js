@@ -9,16 +9,65 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+//Get all the users
 app.get("/users", (req,res)=>{
   let SQL = "select * from users"
   db.query(SQL,(err,result)=>{
     if(err) res.send(err)
-    console.log(result)
     res.send(result)
   })
-
 })
+
+//Get all the roles
+app.get("/roles", (req,res)=>{
+  let SQL = "select * from roles"
+  db.query(SQL,(err,result)=>{
+    if(err) res.send(err)
+    res.send(result)
+  })
+})
+
+//Get all the user roles
+app.get("/user-roles", (req,res)=>{
+  let SQL = "select * from user_roles"
+  db.query(SQL,(err,result)=>{
+    if(err) res.send(err)
+    res.send(result)
+  })
+})
+
+//Get the user of specific id
+
+app.get("/users/:id", (req,res)=>{
+  let id = req.params.id
+  let SQL = `select * from users where id=${id}`
+  db.query(SQL,(err,result)=>{
+    if(err) res.send(err);
+    res.send(result)
+  })
+})
+
+//Get roles of specific id
+app.get("/roles/:id", (req,res)=>{
+  let id = req.params.id
+  let SQL = `select * from roles where id=${id}`
+  db.query(SQL,(err,result)=>{
+    if(err) res.send(err);
+    res.send(result)
+  })
+})
+
+//Get User Roles of Specific id
+app.get("/user-roles/:id", (req,res)=>{
+  let id = req.params.id
+  let SQL = `select * from user_roles where id=${id}`
+  db.query(SQL,(err,result)=>{
+    if(err) res.send(err);
+    res.send(result)
+  })
+})
+
+
 
 app.post("/register" , async (req, res) => {
   //destructuring req.body object

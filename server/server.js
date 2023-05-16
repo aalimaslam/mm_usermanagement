@@ -4,15 +4,19 @@ const cors = require("cors");
 const db = require("./config/db");
 const port = 8989;
 app.use(cors());
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 
 app.get("/", (req, res) => {
   res.send("Hi");
 });
 
+
 app.post("/register", (req, res) => {
-  req.body = JSON.parse(Object.keys(req.body)[0]);
   const { name, username, email, password, contact } = req.body;
+  console.log(req.body) 
   if (!req.body)
     return res.status(400).json({ success: false, error: "No body" });
   if (!name || !username || !email || !password || !contact)
@@ -28,18 +32,19 @@ app.post("/register", (req, res) => {
     contact == ""
   )
     return;
+    // username	name	email	password	contact
   console.log(req.body);
   const sqlInsert =
-    "INSERT INTO users(username, password, email, contact, name) VALUES (?,?,?,?)";
+    "INSERT INTO users(username, name, email, password, contact) VALUES (?,?,?,?,?)";
   db.query(
     sqlInsert,
-    [username, password, email, contact, name],
+    [username, name, email, password, contact],
     (err, result) => {
       console.log(result);
       console.log(err);
     }
   );
-  res.send("Query executed");
+  res.redirect("http://localhost:3000/login");
 });
 
 // app.get("/", (req, res) => {

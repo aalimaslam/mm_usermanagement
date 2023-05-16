@@ -1,0 +1,19 @@
+Users Table {
+    name  : String,
+    username : String,
+    email : String,
+    password : String,
+    contact : String
+    id : Number
+}
+
+Roles Table {
+    id : Number,
+    rolename : String
+}
+
+user_roles {
+    id : Number,
+    user_id : Number (users table id),
+    role_id : Number (Roles table id)
+}

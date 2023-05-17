@@ -28,7 +28,7 @@ app.post("/register", (req, res) => {
     contact == ""
   )
     return;
-  console.log(req.body);
+
   const sqlInsert =
     "INSERT INTO users(username, password, email, contact, name) VALUES (?,?,?,?)";
   db.query(

@@ -73,11 +73,6 @@ app.post("/register" , async (req, res) => {
   //destructuring req.body object
   let { name, username, email, password, contact } = req.body;
 
-  //Hashing Password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password,salt);
-  password = hashedPassword;
-
   //checking for worst casses
   if (!req.body)
     return res.status(400).json({ success: false, error: "No body" });
@@ -85,6 +80,11 @@ app.post("/register" , async (req, res) => {
     return res.status(400).json({ success: false, error: "Missing fields" });
   if (name == null || username == null || email == null || password == null)
     return res.status(400).json({ success: false, error: "Null fields" });
+
+  //Hashing Password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password,salt);
+  password = hashedPassword;
 
 
   //SQL Query that is needed to be executed
